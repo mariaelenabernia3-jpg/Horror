@@ -16,8 +16,6 @@
             --glitch-color-1: rgba(159, 29, 29, 0.8);
             --glitch-color-2: rgba(29, 159, 159, 0.8);
         }
-
-        /* --- Estilos Generales y Menú Principal --- */
         body { margin: 0; font-family: 'VT323', monospace; overflow: hidden; background-color: var(--dark-color); cursor: default; }
         #loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 1.5s ease-out, visibility 1.5s; }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
@@ -47,43 +45,19 @@
         .menu-button.distorting { animation: text-distort 0.4s ease-in-out; }
         @keyframes text-distort { 0%{transform:skewX(0) translateX(0);color:#a0a0a0;text-shadow:0 0 2px #000}25%{transform:skewX(20deg) translateX(10px);color:var(--primary-color);text-shadow:-2px 0 var(--glitch-color-2),2px 0 var(--glitch-color-1)}50%{transform:skewX(0) translateX(-15px);color:var(--secondary-color);text-shadow:none}75%{transform:skewX(-20deg) translateX(5px);color:var(--primary-color);text-shadow:-2px 0 var(--glitch-color-2),2px 0 var(--glitch-color-1)}100%{transform:skewX(0) translateX(0);color:#a0a0a0;text-shadow:0 0 2px #000} }
         .version { position: absolute; bottom: 10px; right: 15px; z-index: 3; color: rgba(159, 29, 29, 0.5); font-size: 1rem; }
-        
-        /* === Estilos para Modales === */
-        @keyframes modal-glow {
-            0%, 100% { box-shadow: 0 0 15px var(--glitch-color-1), 0 0 30px var(--glitch-color-1), inset 0 0 10px #000; }
-            50% { box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color), inset 0 0 10px #000; }
-        }
+        @keyframes modal-glow { 0%, 100% { box-shadow: 0 0 15px var(--glitch-color-1), 0 0 30px var(--glitch-color-1), inset 0 0 10px #000; } 50% { box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color), inset 0 0 10px #000; } }
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 0, 0, 0.9); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
-        .modal-content {
-            background-color: #1a1a1a; color: var(--secondary-color); padding: 30px;
-            border: 2px solid var(--primary-color); width: 90%; 
-            max-width: 700px;
-            position: relative; animation: modal-glow 3s ease-in-out infinite;
-            font-family: 'VT323', monospace; font-size: 1.2rem;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            background-size: cover; background-blend-mode: overlay;
-        }
+        .modal-content { background-color: #1a1a1a; color: var(--secondary-color); padding: 30px; border: 2px solid var(--primary-color); width: 90%; max-width: 700px; position: relative; animation: modal-glow 3s ease-in-out infinite; font-family: 'VT323', monospace; font-size: 1.2rem; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); background-size: cover; background-blend-mode: overlay; }
         .modal-content h2 { font-family: 'Eater', cursive; text-align: center; color: var(--primary-color); text-shadow: 0 0 10px var(--primary-color); font-size: 2.5rem; margin-top: 0; margin-bottom: 25px; }
         .close-button { color: #777; position: absolute; top: 10px; right: 20px; font-size: 42px; font-weight: bold; cursor: pointer; transition: color 0.2s, text-shadow 0.2s; z-index: 10; }
         .close-button:hover { color: var(--secondary-color); text-shadow: 0 0 8px var(--primary-color); }
         .slots-container { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 20px; }
-        .slot {
-            width: 180px; height: 210px; background-color: var(--dark-color);
-            border: 2px solid #333; box-shadow: inset 0 0 8px #000;
-            display: flex; flex-direction: column; cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s; margin: 15px; position: relative;
-        }
+        .slot { width: 180px; height: 210px; background-color: var(--dark-color); border: 2px solid #333; box-shadow: inset 0 0 8px #000; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin: 15px; position: relative; }
         .slot:hover { transform: translateY(-5px) scale(1.03); border-color: var(--primary-color); box-shadow: inset 0 0 8px #000, 0 0 15px var(--glitch-color-1); }
         .slot-image { flex-grow: 1; background-color: #050505; color: #222; display: flex; justify-content: center; align-items: center; font-size: 5rem; text-shadow: 0 0 5px #000; }
         .slot-info { padding: 10px; text-align: center; font-size: 1.1rem; color: #aaa; line-height: 1.3; }
         .slot-info.empty { color: #555; font-style: italic; font-size: 1.2rem; }
-        .delete-button {
-            position: absolute; top: 5px; right: 5px; width: 30px; height: 30px;
-            background-color: var(--primary-color); color: var(--secondary-color);
-            border: 1px solid var(--dark-color); font-size: 1.5rem; font-weight: bold;
-            line-height: 28px; text-align: center; cursor: pointer;
-            opacity: 0; transition: opacity 0.2s, background-color 0.2s; pointer-events: none;
-        }
+        .delete-button { position: absolute; top: 5px; right: 5px; width: 30px; height: 30px; background-color: var(--primary-color); color: var(--secondary-color); border: 1px solid var(--dark-color); font-size: 1.5rem; font-weight: bold; line-height: 28px; text-align: center; cursor: pointer; opacity: 0; transition: opacity 0.2s, background-color 0.2s; pointer-events: none; }
         .slot.occupied:hover .delete-button { opacity: 1; pointer-events: all; }
         .delete-button:hover { background-color: #ff0000; }
         .trophy-slot.locked .slot-image { color: #111; }
@@ -99,18 +73,11 @@
         .control input[type="range"] { -webkit-appearance: none; width: 100%; background: transparent; }
         .control input[type="range"]::-webkit-slider-runnable-track { background: #444; height: 4px; }
         .control input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 12px; background: var(--primary-color); margin-top: -10px; box-shadow: 0 0 5px var(--primary-color); }
-        #save-options-btn { display: block; width: 60%; margin: 30px auto 0; padding: 12px; font-size: 1.5rem; color: var(--secondary-color); background-color: var(--primary-color); border: 2px solid var(--primary-color); cursor: pointer; transition: background-color 0.2s, box-shadow 0.2s; }
+        #save-options-btn { display: block; width: 60%; margin: 30px auto 0; padding: 12px; font-size: 1.5rem; color: var(--secondary-color); background-color: var(--primary-color); border: 2px solid var(--primary-color); cursor: pointer; transition: background-color 0.2s, box-shadow 0.2s, color 0.2s; }
         #save-options-btn:hover { background-color: #c22f2f; box-shadow: 0 0 15px var(--primary-color); }
-
-        #difficulty-description {
-            text-align: center;
-            margin-top: 20px;
-            padding: 0 15px;
-            color: #999;
-            font-size: 1rem;
-            line-height: 1.4;
-            min-height: 3em; 
-        }
+        #difficulty-description { text-align: center; margin-top: 20px; padding: 0 15px; color: #999; font-size: 1rem; line-height: 1.4; min-height: 3em; }
+        #game-scene { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 1; color: var(--secondary-color); text-align: center; }
+        #game-content h1 { font-family: 'Eater', cursive; font-size: 6rem; text-shadow: 0 0 10px var(--primary-color); }
     </style>
 </head>
 <body>
@@ -131,7 +98,9 @@
                 <button id="credits-btn" class="menu-button" data-key="credits">Créditos</button>
             </nav>
         </main>
-        <!-- CAMBIO: Texto de la versión actualizado -->
+        <div id="game-scene" style="display: none;">
+            <div id="game-content"></div>
+        </div>
         <div class="version">V0.1Alpha</div>
     </div>
     <div id="new-game-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="new_game_title">Iniciar Nueva Partida</h2><div id="new-game-slots-container" class="slots-container"></div></div></div>
@@ -152,12 +121,16 @@
     </div>
     <div id="credits-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="credits">Créditos</h2><p style="text-align:center; font-size: 1.5rem; line-height: 2;">DESARROLLO // DZM<br>IDEAS // DZM & KEVIN<br>ARTE & DISEÑO // KEVIN</p></div></div>
 
+    <audio id="background-music" src="audio/musica_fondo.mp3" loop></audio>
+    <audio id="ui-click-sound" src="audio/sonido_click.wav"></audio>
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const translations = {
             es: { 
                 loading: "SEÑAL PERDIDA", new_game: "Nuevo Juego", load_game: "Cargar Partida", trophies: "Trofeos", options: "Opciones", credits: "Créditos", 
-                new_game_title: "Iniciar Nueva Partida", load_game_title: "Cargar Partida", trophies_title: "Finales y Secretos", options_title: "Opciones", save_changes: "Guardar Cambios", 
+                new_game_title: "Iniciar Nueva Partida", load_game_title: "Cargar Partida", trophies_title: "Finales y Secretos", options_title: "Opciones", 
+                save_changes: "Guardar Cambios", saved_changes: "Guardado ✓", 
                 slot_day: "Día", slot_survivors: "Supervivientes", slot_empty: "[ Vacío ]", slot_overwrite: "[ Sobrescribir ]", trophy_locked: "???", 
                 options_language: "Idioma", options_sound: "Sonido", options_master_volume: "Volumen General", options_music_volume: "Música", 
                 options_difficulty: "Dificultad", options_difficulty_easy: "Fácil", options_difficulty_normal: "Normal", options_difficulty_hard: "Difícil",
@@ -168,7 +141,8 @@
             },
             en: { 
                 loading: "SIGNAL LOST", new_game: "New Game", load_game: "Load Game", trophies: "Trophies", options: "Options", credits: "Credits", 
-                new_game_title: "Start New Game", load_game_title: "Load Game", trophies_title: "Endings & Secrets", options_title: "Options", save_changes: "Save Changes", 
+                new_game_title: "Start New Game", load_game_title: "Load Game", trophies_title: "Endings & Secrets", options_title: "Options", 
+                save_changes: "Save Changes", saved_changes: "Saved ✓", 
                 slot_day: "Day", slot_survivors: "Survivors", slot_empty: "[ Empty ]", slot_overwrite: "[ Overwrite ]", trophy_locked: "???", 
                 options_language: "Language", options_sound: "Sound", options_master_volume: "Master Volume", options_music_volume: "Music", 
                 options_difficulty: "Difficulty", options_difficulty_easy: "Easy", options_difficulty_normal: "Normal", options_difficulty_hard: "Hard",
@@ -180,14 +154,37 @@
         };
         let currentLang = 'es';
         
+        const mainMenu = document.querySelector('.main-container');
+        const gameScene = document.getElementById('game-scene');
         const modals = { newGame: document.getElementById('new-game-modal'), loadGame: document.getElementById('load-game-modal'), trophies: document.getElementById('trophies-modal'), options: document.getElementById('options-modal'), credits: document.getElementById('credits-modal') };
         const buttons = { newGame: document.getElementById('new-game-btn'), loadGame: document.getElementById('load-game-btn'), trophies: document.getElementById('trophies-btn'), options: document.getElementById('options-btn'), credits: document.getElementById('credits-btn'), saveOptions: document.getElementById('save-options-btn') };
         const containers = { newGame: document.getElementById('new-game-slots-container'), loadGame: document.getElementById('load-game-slots-container'), trophies: document.getElementById('trophy-slots-container') };
-        const optionsUI = {
-            langEs: document.getElementById('lang-es'), langEn: document.getElementById('lang-en'),
-            masterVolume: document.getElementById('master-volume'), musicVolume: document.getElementById('music-volume'),
-            diffEasy: document.getElementById('difficulty-easy'), diffNormal: document.getElementById('difficulty-normal'), diffHard: document.getElementById('difficulty-hard'),
-            difficultyDesc: document.getElementById('difficulty-description')
+        const optionsUI = { langEs: document.getElementById('lang-es'), langEn: document.getElementById('lang-en'), masterVolume: document.getElementById('master-volume'), musicVolume: document.getElementById('music-volume'), diffEasy: document.getElementById('difficulty-easy'), diffNormal: document.getElementById('difficulty-normal'), diffHard: document.getElementById('difficulty-hard'), difficultyDesc: document.getElementById('difficulty-description') };
+        
+        const audio = { music: document.getElementById('background-music'), uiClick: document.getElementById('ui-click-sound') };
+        
+        // --- CAMBIO: Lógica para desbloquear el audio ---
+        let isAudioUnlocked = false;
+        const unlockAudio = () => {
+            if (isAudioUnlocked) return;
+            const soundEnabled = optionsUI.masterVolume.value > 0;
+            if(soundEnabled){
+                const musicOriginalVolume = audio.music.volume;
+                const clickOriginalVolume = audio.uiClick.volume;
+
+                audio.music.volume = 0;
+                audio.uiClick.volume = 0;
+                
+                audio.music.play().catch(()=>{});
+                audio.music.pause();
+                audio.uiClick.play().catch(()=>{});
+                audio.uiClick.pause();
+                
+                audio.music.volume = musicOriginalVolume;
+                audio.uiClick.volume = clickOriginalVolume;
+            }
+            isAudioUnlocked = true;
+            console.log("Audio context unlocked.");
         };
 
         const openModal = (modal) => modal.style.display = 'flex';
@@ -195,18 +192,9 @@
         
         document.querySelectorAll('.close-button').forEach(button => {
             const modal = button.closest('.modal');
-            if (modal.id === 'options-modal') {
-                button.onclick = () => { closeModal(modal); loadSettingsToUI(); };
-            } else {
-                button.onclick = () => closeModal(modal);
-            }
+            if (modal.id === 'options-modal') { button.onclick = () => { closeModal(modal); loadSettingsToUI(); }; } else { button.onclick = () => closeModal(modal); }
         });
-        window.onclick = (event) => {
-            if (event.target.classList.contains('modal')) {
-                if (event.target.id === 'options-modal') { loadSettingsToUI(); }
-                closeModal(event.target);
-            }
-        };
+        window.onclick = (event) => { if (event.target.classList.contains('modal')) { if (event.target.id === 'options-modal') { loadSettingsToUI(); } closeModal(event.target); } };
 
         buttons.newGame.onclick = () => { populateSaveSlots(containers.newGame, 'new'); openModal(modals.newGame); };
         buttons.loadGame.onclick = () => { populateSaveSlots(containers.loadGame, 'load'); openModal(modals.loadGame); };
@@ -214,27 +202,22 @@
         buttons.options.onclick = () => { loadSettingsToUI(); openModal(modals.options); };
         buttons.credits.onclick = () => { openModal(modals.credits); };
 
-        const updateDifficultyDescription = (difficulty) => {
-            const key = `options_difficulty_${difficulty}_desc`;
-            if (translations[currentLang] && translations[currentLang][key]) {
-                optionsUI.difficultyDesc.textContent = translations[currentLang][key];
-            }
+        const startGame = (saveData) => {
+            mainMenu.style.display = 'none';
+            gameScene.style.display = 'flex';
+            const gameContent = document.getElementById('game-content');
+            gameContent.innerHTML = `<h1>${translations[currentLang].slot_day} ${saveData.day}</h1>`;
+            audio.music.play().catch(e => console.error("La reproducción de música fue bloqueada:", e));
+            console.log("Juego iniciado con los datos:", saveData);
         };
 
+        const updateDifficultyDescription = (difficulty) => { const key = `options_difficulty_${difficulty}_desc`; if (translations[currentLang] && translations[currentLang][key]) { optionsUI.difficultyDesc.textContent = translations[currentLang][key]; } };
         const applyLanguage = (lang) => {
             currentLang = lang;
-            document.querySelectorAll('[data-key]').forEach(elem => {
-                const key = elem.getAttribute('data-key');
-                if (translations[lang] && translations[lang][key]) { elem.textContent = translations[lang][key]; }
-            });
-            optionsUI.langEs.classList.toggle('active', lang === 'es');
-            optionsUI.langEn.classList.toggle('active', lang === 'en');
-            
+            document.querySelectorAll('[data-key]').forEach(elem => { const key = elem.getAttribute('data-key'); if (translations[lang] && translations[lang][key]) { elem.textContent = translations[lang][key]; } });
+            optionsUI.langEs.classList.toggle('active', lang === 'es'); optionsUI.langEn.classList.toggle('active', lang === 'en');
             const activeDifficultyBtn = document.querySelector('#options-modal .control button.active[id^="difficulty-"]');
-            if (activeDifficultyBtn) {
-                const difficulty = activeDifficultyBtn.id.replace('difficulty-', '');
-                updateDifficultyDescription(difficulty);
-            }
+            if (activeDifficultyBtn) { const difficulty = activeDifficultyBtn.id.replace('difficulty-', ''); updateDifficultyDescription(difficulty); }
         };
 
         const SAVE_SLOTS_KEY = 'borrowedFace_saveSlots_vFinal';
@@ -242,95 +225,51 @@
         const setSavedData = (data) => localStorage.setItem(SAVE_SLOTS_KEY, JSON.stringify(data));
 
         const populateSaveSlots = (container, mode) => {
-            const savedData = getSavedData();
-            container.innerHTML = '';
+            const savedData = getSavedData(); container.innerHTML = '';
             savedData.forEach((slotData, index) => {
-                const slotElement = document.createElement('div');
-                slotElement.classList.add('slot');
-                let contentHTML = '';
-
+                const slotElement = document.createElement('div'); slotElement.classList.add('slot'); let contentHTML = '';
                 if (slotData) {
                     slotElement.classList.add('occupied');
                     contentHTML = `<div class="delete-button">&times;</div><div class="slot-image"></div> <div class="slot-info"> <strong>${translations[currentLang].slot_day} ${slotData.day}</strong><br> ${slotData.survivors} ${translations[currentLang].slot_survivors}<br> ${mode === 'new' ? `<span style="color:var(--primary-color);">${translations[currentLang].slot_overwrite}</span>` : ''} </div>`;
-                } else {
-                    contentHTML = `<div class="slot-image">+</div> <div class="slot-info empty">${translations[currentLang].slot_empty}</div>`;
-                }
+                } else { contentHTML = `<div class="slot-image">+</div> <div class="slot-info empty">${translations[currentLang].slot_empty}</div>`; }
                 slotElement.innerHTML = contentHTML;
-                
-                if (slotData) {
-                    const deleteBtn = slotElement.querySelector('.delete-button');
-                    if (deleteBtn) {
-                        deleteBtn.onclick = (e) => {
-                            e.stopPropagation();
-                            if (confirm(translations[currentLang].confirm_delete)) {
-                                deleteSaveSlot(index);
-                                populateSaveSlots(container, mode);
-                            }
-                        };
-                    }
-                }
-
-                slotElement.onclick = () => handleSlotClick(index, slotData, mode);
-                container.appendChild(slotElement);
+                if (slotData) { const deleteBtn = slotElement.querySelector('.delete-button'); if (deleteBtn) { deleteBtn.onclick = (e) => { e.stopPropagation(); if (confirm(translations[currentLang].confirm_delete)) { deleteSaveSlot(index); populateSaveSlots(container, mode); } }; } }
+                slotElement.onclick = () => handleSlotClick(index, slotData, mode); container.appendChild(slotElement);
             });
         };
 
-        const deleteSaveSlot = (index) => {
-            let saves = getSavedData();
-            saves[index] = null;
-            setSavedData(saves);
-        };
-
+        const deleteSaveSlot = (index) => { let saves = getSavedData(); saves[index] = null; setSavedData(saves); };
         const handleSlotClick = (index, slotData, mode) => {
             if (mode === 'new') {
-                const isOccupied = slotData !== null;
-                if (!isOccupied || confirm(`¿Sobrescribir datos en la ranura ${index + 1}?`)) {
-                    let saves = getSavedData();
-                    saves[index] = { day: 1, survivors: 4, timestamp: new Date().toISOString() };
-                    setSavedData(saves);
-                    alert(`Iniciando nueva partida en la Ranura ${index + 1}...`);
-                    closeModal(modals.newGame);
-                }
+                if (slotData && !confirm(`¿Sobrescribir datos en la ranura ${index + 1}?`)) { return; }
+                let saves = getSavedData(); saves[index] = { day: 1, survivors: 4, timestamp: new Date().toISOString() }; setSavedData(saves);
+                closeModal(modals.newGame); startGame(saves[index]);
             } else if (mode === 'load') {
-                if (slotData) {
-                    alert(`Cargando partida desde la Ranura ${index + 1}...`);
-                    closeModal(modals.loadGame);
-                } else {
-                    alert('Esta ranura está vacía.');
-                }
+                if (slotData) { closeModal(modals.loadGame); startGame(slotData); } else { alert('Esta ranura está vacía.'); }
             }
         };
         
         const populateTrophySlots = () => { containers.trophies.innerHTML = ''; for(let i=0; i<6; i++) { const slotElement = document.createElement('div'); slotElement.classList.add('slot', 'trophy-slot', 'locked'); slotElement.innerHTML = ` <div class="slot-image">?</div> <div class="slot-info">${translations[currentLang].trophy_locked}</div>`; containers.trophies.appendChild(slotElement); } };
-        
         const OPTIONS_KEY = 'borrowedFace_options_vFinal';
 
         const saveSettings = () => {
-            const settings = {
-                language: currentLang,
-                masterVolume: optionsUI.masterVolume.value,
-                musicVolume: optionsUI.musicVolume.value,
-                difficulty: document.querySelector('#options-modal .control button.active[id^="difficulty-"]').id.replace('difficulty-', '')
-            };
+            const settings = { language: currentLang, masterVolume: optionsUI.masterVolume.value, musicVolume: optionsUI.musicVolume.value, difficulty: document.querySelector('#options-modal .control button.active[id^="difficulty-"]').id.replace('difficulty-', '') };
             localStorage.setItem(OPTIONS_KEY, JSON.stringify(settings));
-            alert("¡Cambios guardados!");
-            closeModal(modals.options);
+            const saveBtn = buttons.saveOptions; const originalTextKey = saveBtn.getAttribute('data-key');
+            saveBtn.setAttribute('data-key', 'saved_changes'); saveBtn.textContent = translations[currentLang].saved_changes;
+            setTimeout(() => { saveBtn.setAttribute('data-key', originalTextKey); saveBtn.textContent = translations[currentLang][originalTextKey]; closeModal(modals.options); }, 1200);
         };
 
         const loadSettingsToUI = () => {
             const savedOptions = JSON.parse(localStorage.getItem(OPTIONS_KEY)) || {};
             const defaultOptions = { language: 'es', masterVolume: 80, musicVolume: 80, difficulty: 'normal' };
             const options = { ...defaultOptions, ...savedOptions };
-
             applyLanguage(options.language);
-            optionsUI.masterVolume.value = options.masterVolume;
-            optionsUI.musicVolume.value = options.musicVolume;
-            
+            optionsUI.masterVolume.value = options.masterVolume; optionsUI.musicVolume.value = options.musicVolume;
+            audio.music.volume = options.musicVolume / 100; audio.uiClick.volume = options.masterVolume / 100;
             document.querySelectorAll('#options-modal .control button[id^="difficulty-"]').forEach(b => b.classList.remove('active'));
             const difficultyButton = document.getElementById(`difficulty-${options.difficulty}`);
-            if(difficultyButton) {
-                difficultyButton.classList.add('active');
-            }
+            if(difficultyButton) { difficultyButton.classList.add('active'); }
             updateDifficultyDescription(options.difficulty);
         };
 
@@ -346,17 +285,34 @@
             };
         });
 
+        const playUiSound = () => {
+            // CAMBIO: Solo reproducir si el audio está desbloqueado
+            if (!isAudioUnlocked) return;
+            audio.uiClick.currentTime = 0;
+            audio.uiClick.play().catch(()=>{});
+        };
+
+        document.querySelectorAll('.menu-button, .slot, .close-button, .control button, #save-options-btn').forEach(elem => {
+            elem.addEventListener('click', playUiSound);
+        });
+
+        optionsUI.masterVolume.addEventListener('input', () => { audio.uiClick.volume = optionsUI.masterVolume.value / 100; });
+        optionsUI.musicVolume.addEventListener('input', () => { audio.music.volume = optionsUI.musicVolume.value / 100; });
+
         const initialize = () => {
             loadSettingsToUI();
             const loadingScreen = document.getElementById('loading-screen');
             const creepyFace = document.querySelector('.creepy-face');
             setTimeout(() => { creepyFace.style.animation = 'flash-face 0.2s ease-in-out'; }, 1800);
             setTimeout(() => { loadingScreen.classList.add('hidden'); }, 3500);
-            
             const menuButtons = document.querySelectorAll('.menu-button');
             const distortRandomButton = () => { const randomIndex = Math.floor(Math.random() * menuButtons.length); const randomButton = menuButtons[randomIndex]; randomButton.classList.add('distorting'); randomButton.addEventListener('animationend', () => { randomButton.classList.remove('distorting'); }, { once: true }); };
             const startDistortionLoop = () => { const randomDelay = Math.random() * 4000 + 2000; setTimeout(() => { distortRandomButton(); startDistortionLoop(); }, randomDelay); };
             startDistortionLoop();
+            
+            // --- CAMBIO: Evento para desbloquear el audio en la primera interacción ---
+            document.addEventListener('click', unlockAudio, { once: true });
+            document.addEventListener('keydown', unlockAudio, { once: true });
         };
 
         initialize();
