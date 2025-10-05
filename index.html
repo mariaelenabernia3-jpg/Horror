@@ -76,117 +76,19 @@
         #save-options-btn { display: block; width: 60%; margin: 30px auto 0; padding: 12px; font-size: 1.5rem; color: var(--secondary-color); background-color: var(--primary-color); border: 2px solid var(--primary-color); cursor: pointer; transition: background-color 0.2s, box-shadow 0.2s, color 0.2s; }
         #save-options-btn:hover { background-color: #c22f2f; box-shadow: 0 0 15px var(--primary-color); }
         #difficulty-description { text-align: center; margin-top: 20px; padding: 0 15px; color: #999; font-size: 1rem; line-height: 1.4; min-height: 3em; }
-        #game-scene { width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 1; color: var(--secondary-color); text-align: center; }
         
-        #day-transition-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            z-index: 150;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--secondary-color);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            pointer-events: none;
-        }
-        #day-transition-screen.visible {
-            opacity: 1;
-        }
-        #day-transition-screen h1 {
-            font-family: 'Eater', cursive;
-            font-size: 8vw;
-            text-shadow: 0 0 15px var(--primary-color);
-            animation: text-glitch-scary 1.5s infinite steps(1);
-        }
+        #day-transition-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000; z-index: 150; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--secondary-color); opacity: 0; transition: opacity 0.5s ease-in-out; pointer-events: none; }
+        #day-transition-screen.visible { opacity: 1; }
+        #day-transition-screen h1 { font-family: 'Eater', cursive; font-size: 8vw; text-shadow: 0 0 15px var(--primary-color); animation: text-glitch-scary 1.5s infinite steps(1); }
 
-        #lore-screen {
-            display: none; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            background-image: url('tele.webp'); 
-            background-size: contain; 
-            background-repeat: no-repeat;
-            background-position: center center;
-            z-index: 200;
-            cursor: pointer;
-        }
-        #lore-subtitle {
-            position: absolute;
-            bottom: 10%;
-            left: 5%;
-            width: 90%;
-            text-align: center;
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            text-shadow: 2px 2px 5px #000, -2px -2px 5px #000;
-            padding: 10px;
-            background-color: rgba(0,0,0,0.5);
-        }
+        #lore-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000; background-image: url('tele.webp'); background-size: contain; background-repeat: no-repeat; background-position: center center; z-index: 200; cursor: pointer; }
+        #lore-subtitle { position: absolute; bottom: 10%; left: 5%; width: 90%; text-align: center; color: var(--secondary-color); font-size: 1.8rem; text-shadow: 2px 2px 5px #000, -2px -2px 5px #000; padding: 10px; background-color: rgba(0,0,0,0.5); }
         
-        #creepy-loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            z-index: 9998;
-            display: none; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            animation: screen-flicker 0.1s infinite steps(1);
-        }
-        .glitch-symbol {
-            width: 120px;
-            height: 60px;
-            border: 4px solid var(--glitch-color-1);
-            border-radius: 50%;
-            position: relative;
-            animation: eye-twitch 4s infinite ease-in-out;
-            box-shadow: 0 0 25px var(--glitch-color-1);
-        }
-        .glitch-symbol::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 25px;
-            height: 25px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--primary-color), inset 0 0 5px #000;
-            animation: pupil-dilate 4s infinite ease-in-out;
-        }
-        .creepy-loading-text {
-            position: absolute;
-            bottom: 15%;
-            font-size: 2rem;
-            letter-spacing: 0.3em;
-            color: var(--primary-color);
-            text-shadow: 0 0 8px var(--primary-color);
-            animation: text-glitch-scary 1.2s infinite steps(1);
-        }
-        #creepy-loading-screen::before, #creepy-loading-screen::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--secondary-color);
-            opacity: 0.1;
-            animation: scanline-glitch 0.3s infinite;
-        }
+        #creepy-loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000; z-index: 9998; display: none; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; animation: screen-flicker 0.1s infinite steps(1); }
+        .glitch-symbol { width: 120px; height: 60px; border: 4px solid var(--glitch-color-1); border-radius: 50%; position: relative; animation: eye-twitch 4s infinite ease-in-out; box-shadow: 0 0 25px var(--glitch-color-1); }
+        .glitch-symbol::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 25px; height: 25px; background: var(--primary-color); border-radius: 50%; box-shadow: 0 0 15px var(--primary-color), inset 0 0 5px #000; animation: pupil-dilate 4s infinite ease-in-out; }
+        .creepy-loading-text { position: absolute; bottom: 15%; font-size: 2rem; letter-spacing: 0.3em; color: var(--primary-color); text-shadow: 0 0 8px var(--primary-color); animation: text-glitch-scary 1.2s infinite steps(1); }
+        #creepy-loading-screen::before, #creepy-loading-screen::after { content: ''; position: absolute; width: 100%; height: 2px; background: var(--secondary-color); opacity: 0.1; animation: scanline-glitch 0.3s infinite; }
         #creepy-loading-screen::after { animation-delay: 0.15s; }
         
         @keyframes screen-flicker { 0% { opacity: 1; } 50% { opacity: 0.95; } 100% { opacity: 1; } }
@@ -219,9 +121,6 @@
                 <button id="credits-btn" class="menu-button" data-key="credits">Créditos</button>
             </nav>
         </main>
-        <div id="game-scene">
-            <div id="game-content"></div>
-        </div>
         <div id="lore-screen">
             <div id="lore-subtitle"></div>
         </div>
@@ -250,7 +149,6 @@
     <audio id="background-music" src="fondo.mp3" loop></audio>
     <audio id="ui-click-sound" src="click-409642.mp3"></audio>
 
-    <!-- CAMBIO 1: AÑADIR ETIQUETAS DE AUDIO PARA LAS VOCES -->
     <audio id="vo_lore_1" class="vo-line" src="El mundo q conocíamos.m4a"></audio>
     <audio id="vo_lore_2" class="vo-line" src="algo cayó del suelo.m4a"></audio>
     <audio id="vo_lore_3" class="vo-line" src="se ven como nosotros.m4a"></audio>
@@ -271,14 +169,13 @@
                 options_difficulty_normal_desc: "La experiencia de juego equilibrada y recomendada.",
                 options_difficulty_hard_desc: "Los recursos escasean y los enemigos son implacables. Un verdadero desafío de supervivencia.",
                 
-                // --- CAMBIO 2: ESTRUCTURA DE DIÁLOGOS MEJORADA ---
                 lore_text: [
                     { text: "Presentador: El mundo que conocíamos... se ha ido.", audioId: "vo_lore_1" },
                     { text: "Presentador: Algo cayó del cielo. No hicieron ruido. Simplemente... empezaron a reemplazarnos.", audioId: "vo_lore_2" },
                     { text: "Presentador: Se ven como nosotros, hablan como nosotros. Pero no lo son.", audioId: "vo_lore_3" },
                     { text: "Yo: No puedo salir. Esta casa es mi refugio y mi prisión. El miedo a que una de esas... cosas... me reemplace, me paraliza.", audioId: "vo_lore_4" },
-                    { text: "Yo: Pero los recursos se agotan. El agua... la comida...", audioId: null }, // Sin audio para esta línea
-                    { text: "Yo: Necesito que otros busquen recursos por mí, que corran el riesgo que yo no me atrevo a tomar.", audioId: null } // Sin audio para esta línea
+                    { text: "Yo: Pero los recursos se agotan. El agua... la comida...", audioId: null },
+                    { text: "Yo: Necesito que otros busquen recursos por mí, que corran el riesgo que yo no me atrevo a tomar.", audioId: null }
                 ]
             },
             en: { 
@@ -292,7 +189,7 @@
                 options_difficulty_easy_desc: "More abundant resources and less aggressive enemies. Ideal for focusing on the story.",
                 options_difficulty_normal_desc: "The balanced and recommended gameplay experience.",
                 options_difficulty_hard_desc: "Resources are scarce and enemies are relentless. A true survival challenge.",
-                lore_text: [ // Versión en inglés sin audios asignados
+                lore_text: [
                     { text: "Presenter: The world we knew... is gone.", audioId: null },
                     { text: "Presenter: Something fell from the sky. They made no sound. They just... started replacing us.", audioId: null },
                     { text: "Presenter: They look like us, they talk like us. But they are not.", audioId: null },
@@ -305,7 +202,6 @@
         let currentLang = 'es';
         
         const mainMenu = document.querySelector('.main-container');
-        const gameScene = document.getElementById('game-scene');
         const loreScreen = document.getElementById('lore-screen');
         const dayTransitionScreen = document.getElementById('day-transition-screen');
         const creepyLoadingScreen = document.getElementById('creepy-loading-screen');
@@ -318,7 +214,6 @@
         const audio = { 
             music: document.getElementById('background-music'), 
             uiClick: document.getElementById('ui-click-sound'),
-            // Referencias a los nuevos audios de voz
             vo_lore_1: document.getElementById('vo_lore_1'),
             vo_lore_2: document.getElementById('vo_lore_2'),
             vo_lore_3: document.getElementById('vo_lore_3'),
@@ -330,14 +225,9 @@
         const updateAudioVolumes = () => {
             const masterVol = optionsUI.masterVolume.value / 100;
             const musicMultiplier = optionsUI.musicVolume.value / 100;
-            
             audio.uiClick.volume = masterVol;
             audio.music.volume = masterVol * musicMultiplier;
-            
-            // --- CAMBIO 3: LAS VOCES SE AJUSTAN CON EL VOLUMEN GENERAL ---
-            document.querySelectorAll('.vo-line').forEach(vo => {
-                vo.volume = masterVol;
-            });
+            document.querySelectorAll('.vo-line').forEach(vo => { vo.volume = masterVol; });
         };
 
         const unlockAudio = () => {
@@ -362,28 +252,20 @@
         buttons.options.onclick = () => { loadSettingsToUI(); openModal(modals.options); };
         buttons.credits.onclick = () => { openModal(modals.credits); };
 
-        const showGameScene = (saveData) => {
-            audio.music.pause();
-            mainMenu.style.display = 'none';
-            gameScene.style.display = 'flex';
-            const gameContent = document.getElementById('game-content');
-            gameContent.innerHTML = ``; 
-            console.log("Juego iniciado con los datos:", saveData);
-        };
-
+        // --- CÓDIGO MODIFICADO ---
         const beginGameFlow = (saveData) => {
             dayTransitionScreen.innerHTML = `<h1>${translations[currentLang].slot_day} ${saveData.day}</h1>`;
             dayTransitionScreen.classList.add('visible');
 
             setTimeout(() => {
                 dayTransitionScreen.classList.remove('visible');
+                creepyLoadingScreen.style.display = 'flex';
                 setTimeout(() => {
-                    showGameScene(saveData);
-                }, 500); 
+                    window.location.href = 'game.html';
+                }, 4500); 
             }, 3000); 
         };
         
-        // --- CAMBIO 4: LÓGICA DE REPRODUCCIÓN EN LA SECUENCIA DE HISTORIA ---
         const stopAllVoLines = () => {
             document.querySelectorAll('.vo-line').forEach(vo => {
                 vo.pause();
@@ -398,7 +280,7 @@
             
             mainMenu.style.display = 'none';
             audio.music.pause();
-            stopAllVoLines(); // Asegurarnos de que no haya voces sonando
+            stopAllVoLines();
 
             loreScreen.style.display = 'block';
             
@@ -411,10 +293,10 @@
             };
 
             const advanceLore = () => {
-                stopAllVoLines(); // Detener la voz actual al hacer clic
+                stopAllVoLines();
                 currentLoreIndex++;
                 if (currentLoreIndex < loreTexts.length) {
-                    playCurrentLine(); // Reproducir la siguiente línea
+                    playCurrentLine();
                 } else {
                     loreScreen.removeEventListener('click', advanceLore);
                     loreScreen.style.display = 'none';
@@ -426,7 +308,7 @@
             };
 
             loreScreen.addEventListener('click', advanceLore);
-            playCurrentLine(); // Reproducir la primera línea al empezar
+            playCurrentLine();
         };
 
         const updateDifficultyDescription = (difficulty) => { const key = `options_difficulty_${difficulty}_desc`; if (translations[currentLang] && translations[currentLang][key]) { optionsUI.difficultyDesc.textContent = translations[currentLang][key]; } };
@@ -464,9 +346,7 @@
         
         const handleSlotClick = (index, slotData, mode) => {
             if (mode === 'new') {
-                if (slotData && !confirm(`¿Sobrescribir datos en la ranura ${index + 1}?`)) {
-                    return;
-                }
+                if (slotData && !confirm(`¿Sobrescribir datos en la ranura ${index + 1}?`)) { return; }
                 closeModal(modals.newGame);
                 creepyLoadingScreen.style.display = 'flex';
                 setTimeout(() => {
