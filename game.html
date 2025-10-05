@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowed Face - Habitación</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9f1d1d;
+            --secondary-color: #f5f5dc;
+        }
+
+        body {
+            margin: 0;
+            background-color: #000;
+            font-family: 'VT323', monospace;
+            overflow: hidden;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            /* Asegúrate de que el nombre del archivo de imagen sea el correcto */
+            background: url('casa.webp') no-repeat center center;
+            background-size: cover; 
+        }
+
+        /* --- Zonas Interactivas --- */
+        .interactive-zone {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border-radius: 5px;
+        }
+
+        .interactive-zone:hover {
+            background-color: rgba(245, 245, 220, 0.15);
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 0 15px var(--secondary-color);
+        }
+
+        /* --- COORDENADAS AJUSTADAS NUEVAMENTE --- */
+
+        #tv-zone {
+            top: 24%;
+            left: 22%; /* Más a la derecha */
+            width: 15%;
+            height: 30%;
+        }
+
+        #radio-zone {
+            top: 58%;
+            left: 50%; /* Más para la derecha */
+            width: 10%;
+            height: 10%;
+        }
+
+        #cabinet-zone {
+            top: 10%;   /* Más para arriba */
+            right: 1%;
+            width: 15%;
+            height: 48%;
+        }
+        
+        #picture-zone {
+             top: 7%;
+             left: 8%;
+             width: 13%;
+             height: 12%;
+        }
+
+        /* --- Flechas de Navegación --- */
+        .nav-arrow {
+            position: absolute;
+            font-size: 5vw;
+            color: var(--secondary-color);
+            text-decoration: none;
+            text-shadow: 0 0 10px #000, 0 0 20px #000;
+            transition: transform 0.2s, color 0.2s;
+            z-index: 10;
+        }
+
+        .nav-arrow:hover {
+            transform: scale(1.1);
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+        
+        /* Flecha apuntando a la puerta */
+        #door-arrow {
+            top: 40%;   /* Más para arriba */
+            left: 52%;
+            transform: translateY(-50%); 
+        }
+
+        /* Flecha inferior añadida de nuevo */
+        #hallway-arrow {
+            bottom: 2%;
+            left: 50%;
+            transform: translateX(-50%) rotate(90deg);
+        }
+
+        /* --- Caja de Texto para descripciones --- */
+        #description-box {
+            display: none; /* Oculto por defecto */
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 2px solid var(--primary-color);
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            text-align: center;
+            box-shadow: 0 0 20px var(--primary-color);
+            z-index: 20;
+            user-select: none;
+        }
+         #description-box.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- Zonas Interactivas (invisibles hasta que pasas el ratón por encima) -->
+        <div id="tv-zone" class="interactive-zone"></div>
+        <div id="radio-zone" class="interactive-zone"></div>
+        <div id="cabinet-zone" class="interactive-zone"></div>
+        <div id="picture-zone" class="interactive-zone"></div>
+
+        <!-- Flechas de Navegación -->
+        <a href="door.html" id="door-arrow" class="nav-arrow">➔</a>
+        <a href="hallway.html" id="hallway-arrow" class="nav-arrow">➔</a>
+    </div>
+
+    <!-- Caja de texto para mostrar mensajes -->
+    <div id="description-box"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const descriptionBox = document.getElementById('description-box');
+            
+            const objectDescriptions = {
+                'tv-zone': "Solo hay estática. Un zumbido incesante que llena el silencio.",
+                'radio-zone': "La perilla gira, pero solo se escuchan fragmentos de voces lejanas y música rota. Nada claro.",
+                'cabinet-zone': "Cerrado con llave. Parece que alguien no quería que se abriera fácilmente.",
+                'picture-zone': "Un paisaje de un tiempo más simple. Un lugar al que ya no se puede volver."
+            };
+
+            const showDescription = (text) => {
+                descriptionBox.textContent = text;
+                descriptionBox.classList.add('visible');
+            };
+            
+            const hideDescription = () => {
+                descriptionBox.classList.remove('visible');
+            };
+
+            document.querySelectorAll('.interactive-zone').forEach(zone => {
+                zone.addEventListener('click', () => {
+                    const description = objectDescriptions[zone.id];
+                    if (description) {
+                        showDescription(description);
+                    }
+                });
+            });
+
+            // Oculta la descripción si se hace clic fuera de una zona interactiva
+            document.getElementById('game-container').addEventListener('click', (event) => {
+                if (!event.target.classList.contains('interactive-zone')) {
+                    hideDescription();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
