@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowed Face</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Eater&family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #9f1d1d;
+            --secondary-color: #f5f5dc;
+            --dark-color: #0a0a0a;
+            --glitch-color-1: rgba(159, 29, 29, 0.8);
+            --glitch-color-2: rgba(29, 159, 159, 0.8);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'VT323', monospace;
+            overflow: hidden;
+            background-color: var(--dark-color);
+            cursor: default;
+        }
+
+        /* --- Nueva Pantalla de Carga Tenebrosa --- */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-out, visibility 1.5s;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden; /* Evita que la capa bloquee clics */
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--secondary-color);
+            position: relative;
+        }
+
+        .creepy-face {
+            position: absolute;
+            width: 150px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0; /* Oculto por defecto */
+        }
+        
+        /* Ojos y boca de la cara fantasmal */
+        .creepy-face::before, .creepy-face::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 15px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 5px var(--secondary-color);
+            animation: face-flicker 0.2s infinite;
+        }
+        .creepy-face::before { top: 30%; left: 15%; } /* Ojo izquierdo */
+        .creepy-face::after { top: 30%; right: 15%; } /* Ojo derecho */
+
+        .loading-text {
+            font-size: 2rem;
+            letter-spacing: 0.2em;
+            color: #777;
+            animation: text-glitch-scary 1.5s infinite steps(1);
+        }
+
+        /* Animación para el flash subliminal de la cara */
+        @keyframes flash-face {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.15; transform: scale(1.05); }
+        }
+        
+        @keyframes face-flicker {
+            0% { opacity: 0.5; } 50% { opacity: 0.8; } 100% { opacity: 0.5; }
+        }
+
+        @keyframes text-glitch-scary {
+            0% { text-shadow: 1px 1px 0px #9f1d1d, -1px -1px 0px #1d9f9f; transform: translateX(1px); }
+            20% { text-shadow: none; transform: translateX(0); }
+            40% { text-shadow: 1px 1px 0px #9f1d1d, -1px -1px 0px #1d9f9f; transform: translateY(-1px) skewX(5deg); }
+            60% { text-shadow: none; transform: translateY(0) skewX(0); }
+            80% { text-shadow: 1px -1px 0px #9f1d1d, -1px 1px 0px #1d9f9f; }
+            100% { text-shadow: none; }
+        }
+
+
+        /* --- Estructura Principal --- */
+        .tv-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background: #000 url('fondo.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .tv-container::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAACnRSTlMAAAAAAJu0g8YrOImKbgAAAStJREFUeNrtlcsOwzAMA0s0i795t7//vVwmcur4o7l6mn5X8wBaTo2uR3s8wquv2/s484vXq8s/8i8jgpLTjpzRJGwJ8XClV050I0PT4lkxrr0ifYAnqUeSgQ10tMplE94h3CK1P8ES2YqjAFxLcpkL3yJc1q9+nQV8bCeG8ztCAzDODnL2wQu8mI0BNbBE5CEKBy/gI1yXgGfA7gT/yYD/ATyAOQj+mQro3n58W2XvQvjN4/gX0EDAz1HwAVxI4Ea+MvSC8E+e/uQp57wGvA150QeA2wR/yM+QCf4D/gL+AMX/T0Afgv8wIRfAdgWXOh3wFWsXvA+zWwVfiEdCL8BuxXmBfQSEEfgwM4j+A/wA+gBn4A/Atk/zv4A/An8AfwC/AVi78+wD8c/wB+/vwB/Av4DfgF+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A3eIAAAAAElFTSuQmCC);
+            pointer-events: none; z-index: 2; opacity: 0.1;
+            animation: static-flicker 0.1s infinite;
+        }
+        .tv-container::after {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(0deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.4) 50%), radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%);
+            background-size: 100% 4px, 100% 100%;
+            animation: scanlines 25s linear infinite;
+            z-index: 2; pointer-events: none;
+        }
+        .main-container { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 1; }
+        @keyframes scanlines { from { background-position: 0 0; } to { background-position: 0 -100vh; } }
+        @keyframes static-flicker { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.15; } }
+
+        .title {
+            font-family: 'Eater', cursive; font-size: 12vw;
+            color: var(--secondary-color); position: relative;
+            text-shadow: 0.05em 0 0 var(--glitch-color-1), -0.025em -0.05em 0 var(--glitch-color-2), 0.025em 0.05em 0 var(--glitch-color-1);
+            animation: glitch 1.5s infinite;
+            margin-bottom: 40px; letter-spacing: 0.1em; text-align: center;
+        }
+        .title::before, .title::after { content: 'Borrowed Face'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,10,0.5); overflow: hidden; }
+        .title::before { left: 3px; text-shadow: -3px 0 var(--primary-color); animation: glitch-anim-1 2s infinite linear alternate-reverse; }
+        .title::after { left: -3px; text-shadow: -3px 0 var(--glitch-color-2); animation: glitch-anim-2 2s infinite linear alternate-reverse; }
+        @keyframes glitch { 0%, 100% { transform: translate(0); } 20% { transform: translate(-5px, 5px); } 40% { transform: translate(-5px, -5px); } 60% { transform: translate(5px, 5px); } 80% { transform: translate(5px, -5px); } }
+        @keyframes glitch-anim-1 { 0% { clip-path: inset(30% 0 60% 0); } 20% { clip-path: inset(90% 0 5% 0); } 40% { clip-path: inset(45% 0 45% 0); } 60% { clip-path: inset(10% 0 85% 0); } 80% { clip-path: inset(70% 0 20% 0); } 100% { clip-path: inset(40% 0 50% 0); } }
+        @keyframes glitch-anim-2 { 0% { clip-path: inset(75% 0 15% 0); } 20% { clip-path: inset(15% 0 70% 0); } 40% { clip-path: inset(60% 0 30% 0); } 60% { clip-path: inset(35% 0 55% 0); } 80% { clip-path: inset(5% 0 90% 0); } 100% { clip-path: inset(80% 0 10% 0); } }
+        .menu-button { font-family: 'VT323', monospace; font-size: 2rem; background-color: transparent; border: none; padding: 10px 30px; margin: 8px; cursor: pointer; color: #a0a0a0; text-shadow: 0 0 2px #000; transition: all 0.2s ease-in-out; position: relative; }
+        .menu-button:hover { color: var(--primary-color); text-shadow: 0 0 8px var(--primary-color); }
+        .menu-button.distorting { animation: text-distort 0.4s ease-in-out; }
+        @keyframes text-distort { 0% { transform: skewX(0deg) translateX(0); color: #a0a0a0; text-shadow: 0 0 2px #000;} 25% { transform: skewX(20deg) translateX(10px); color: var(--primary-color); text-shadow: -2px 0 var(--glitch-color-2), 2px 0 var(--glitch-color-1); } 50% { transform: skewX(0deg) translateX(-15px); color: var(--secondary-color); text-shadow: none; } 75% { transform: skewX(-20deg) translateX(5px); color: var(--primary-color); text-shadow: -2px 0 var(--glitch-color-2), 2px 0 var(--glitch-color-1); } 100% { transform: skewX(0deg) translateX(0); color: #a0a0a0; text-shadow: 0 0 2px #000;} }
+        .version { position: absolute; bottom: 10px; right: 15px; z-index: 3; color: rgba(159, 29, 29, 0.5); font-size: 1rem; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 0, 0, 0.9); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1a1a1a; color: var(--secondary-color); padding: 30px; border: 2px solid var(--primary-color); width: 90%; max-width: 700px; position: relative; box-shadow: 0 0 30px var(--primary-color); font-family: 'VT323', monospace; font-size: 1.2rem; }
+        .modal-content h2 { text-align: center; color: var(--primary-color); text-shadow: 0 0 5px var(--primary-color); font-size: 2.5rem; }
+        .close-button { color: #777; position: absolute; top: 10px; right: 20px; font-size: 38px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
+        .close-button:hover { color: var(--primary-color); }
+        .slots-container { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 20px; }
+        .slot { width: 160px; height: 190px; background-color: var(--dark-color); border: 2px solid #333; box-shadow: inset 0 0 5px #000; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s, border-color 0.2s; margin: 10px; }
+        .slot:hover { transform: scale(1.05); border-color: var(--primary-color); }
+        .slot-image { flex-grow: 1; background-color: #050505; color: #222; display: flex; justify-content: center; align-items: center; font-size: 4rem; text-shadow: 0 0 5px #000; }
+        .slot-info { padding: 10px 5px; text-align: center; font-size: 1rem; color: #aaa; line-height: 1.2; }
+        .slot-info.empty { color: #555; font-style: italic; }
+        .trophy-slot.locked .slot-image { color: #111; }
+        .trophy-slot.locked .slot-info { color: #444; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
+        .option-category { border-top: 1px dashed var(--primary-color); padding-top: 15px; }
+        .option-category h3 { color: var(--primary-color); margin-top: 0; }
+        .option-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .option-item label { flex-basis: 40%; }
+        .option-item .control { flex-basis: 55%; }
+        .control button, .control select { padding: 5px 10px; cursor: pointer; border: 1px solid #555; background: transparent; color: #999; font-family: 'VT323', monospace; font-size: 1.1rem; }
+        .control button:hover, .control button.active, .control select:hover { border-color: var(--primary-color); color: var(--primary-color); }
+        .control input[type="range"] { -webkit-appearance: none; width: 100%; background: transparent; }
+        .control input[type="range"]::-webkit-slider-runnable-track { background: #444; height: 4px; }
+        .control input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 10px; background: var(--primary-color); margin-top: -8px; box-shadow: 0 0 5px var(--primary-color); }
+        #save-options-btn { display: block; width: 60%; margin: 30px auto 0; padding: 10px; font-size: 1.5rem; color: var(--secondary-color); background-color: var(--primary-color); border: 2px solid var(--primary-color); cursor: pointer; transition: background-color 0.2s; }
+        #save-options-btn:hover { background-color: #c22f2f; }
+        @media (max-width: 768px) { .title { font-size: 18vw; margin-bottom: 20px; } .menu-button { font-size: 1.5rem; margin: 5px; padding: 8px 15px; } .version { font-size: 0.8rem; bottom: 5px; right: 5px; } .modal-content { font-size: 1rem; } .modal-content h2 { font-size: 1.8rem; } .slot { width: 130px; height: 160px; margin: 5px; } .slot-info { font-size: 0.9rem; } .option-item { flex-direction: column; align-items: flex-start; gap: 5px; } .option-item label { margin-bottom: 5px; } .option-item .control { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="creepy-face"></div>
+            <div class="loading-text" data-key="loading">SIGNAL LOST</div>
+        </div>
+    </div>
+
+    <div class="tv-container">
+        <main class="main-container">
+            <h1 class="title">Borrowed Face</h1>
+            <nav class="menu">
+                <button id="new-game-btn" class="menu-button" data-key="new_game">Nuevo Juego</button>
+                <button id="load-game-btn" class="menu-button" data-key="load_game">Cargar Partida</button>
+                <button id="trophies-btn" class="menu-button" data-key="trophies">Trofeos</button>
+                <button id="options-btn" class="menu-button" data-key="options">Opciones</button>
+                <button id="credits-btn" class="menu-button" data-key="credits">Créditos</button>
+            </nav>
+        </main>
+        <div class="version">v1.0 Final</div>
+    </div>
+
+    <!-- Modales -->
+    <div id="new-game-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="new_game_title">Iniciar Nueva Partida En...</h2><div id="new-game-slots-container" class="slots-container"></div></div></div>
+    <div id="load-game-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="load_game_title">Cargar Partida</h2><div id="load-game-slots-container" class="slots-container"></div></div></div>
+    <div id="trophies-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="trophies_title">Finales y Secretos</h2><div id="trophy-slots-container" class="slots-container"></div></div></div>
+    <div id="options-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="options_title">Opciones</h2><div class="options-grid"><div class="option-category"><h3 data-key="options_language">Idioma</h3><div class="option-item"><div class="control" style="flex-basis: 100%; text-align: center;"><button id="lang-es">Español</button><button id="lang-en">English</button></div></div></div><div class="option-category"><h3 data-key="options_sound">Sonido</h3><div class="option-item"><label data-key="options_master_volume">Volumen General:</label><div class="control"><input type="range" min="0" max="100"></div></div><div class="option-item"><label data-key="options_music_volume">Música:</label><div class="control"><input type="range" min="0" max="100"></div></div></div><div class="option-category"><h3 data-key="options_display">Pantalla</h3><div class="option-item"><label data-key="options_fullscreen">Pantalla Completa:</label><div class="control"><button data-key="options_toggle_on">Sí</button> <button data-key="options_toggle_off">No</button></div></div><div class="option-item"><label data-key="options_resolution">Resolución:</label><div class="control"><select><option>1920x1080</option><option>1280x720</option><option>800x600</option></select></div></div></div><div class="option-category"><h3 data-key="options_difficulty">Dificultad</h3><div class="option-item"><div class="control" style="flex-basis: 100%; text-align: center;"><button data-key="options_difficulty_easy">Fácil</button><button data-key="options_difficulty_normal">Normal</button><button data-key="options_difficulty_hard">Difícil</button></div></div></div></div><button id="save-options-btn" data-key="save_changes">Guardar Cambios</button></div></div>
+    <div id="credits-modal" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2 data-key="credits">Créditos</h2><p style="text-align:center;">DESARROLLO // DZM<br>IDEAS // DZM & KEVIN<br>ARTE & DISEÑO // KEVIN</p></div></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const translations = {
+            es: { loading: "SEÑAL PERDIDA", new_game: "Nuevo Juego", load_game: "Cargar Partida", trophies: "Trofeos", options: "Opciones", credits: "Créditos", new_game_title: "Iniciar Nueva Partida En...", load_game_title: "Cargar Partida", trophies_title: "Finales y Secretos", options_title: "Opciones", save_changes: "Guardar Cambios", slot_day: "Día", slot_survivors: "Supervivientes", slot_empty: "[ Vacío ]", slot_overwrite: "[ Sobrescribir ]", trophy_locked: "???", options_language: "Idioma", options_sound: "Sonido", options_master_volume: "Volumen General", options_music_volume: "Música", options_display: "Pantalla", options_fullscreen: "Pantalla Completa", options_resolution: "Resolución", options_toggle_on: "Sí", options_toggle_off: "No", options_difficulty: "Dificultad", options_difficulty_easy: "Fácil", options_difficulty_normal: "Normal", options_difficulty_hard: "Difícil" },
+            en: { loading: "SIGNAL LOST", new_game: "New Game", load_game: "Load Game", trophies: "Trophies", options: "Options", credits: "Credits", new_game_title: "Start New Game In...", load_game_title: "Load Game", trophies_title: "Endings & Secrets", options_title: "Options", save_changes: "Save Changes", slot_day: "Day", slot_survivors: "Survivors", slot_empty: "[ Empty ]", slot_overwrite: "[ Overwrite ]", trophy_locked: "???", options_language: "Language", options_sound: "Sound", options_master_volume: "Master Volume", options_music_volume: "Music", options_display: "Display", options_fullscreen: "Fullscreen", options_resolution: "Resolution", options_toggle_on: "On", options_toggle_off: "Off", options_difficulty: "Difficulty", options_difficulty_easy: "Easy", options_difficulty_normal: "Normal", options_difficulty_hard: "Hard" }
+        };
+        let currentLang = 'es';
+        const loadingScreen = document.getElementById('loading-screen');
+        const creepyFace = document.querySelector('.creepy-face');
+        const modals = { newGame: document.getElementById('new-game-modal'), loadGame: document.getElementById('load-game-modal'), trophies: document.getElementById('trophies-modal'), options: document.getElementById('options-modal'), credits: document.getElementById('credits-modal'), };
+        const buttons = { newGame: document.getElementById('new-game-btn'), loadGame: document.getElementById('load-game-btn'), trophies: document.getElementById('trophies-btn'), options: document.getElementById('options-btn'), credits: document.getElementById('credits-btn'), langEs: document.getElementById('lang-es'), langEn: document.getElementById('lang-en'), saveOptions: document.getElementById('save-options-btn'), };
+        const closeButtons = document.querySelectorAll('.close-button');
+        const containers = { newGame: document.getElementById('new-game-slots-container'), loadGame: document.getElementById('load-game-slots-container'), trophies: document.getElementById('trophy-slots-container'), };
+        const menuButtons = document.querySelectorAll('.menu-button');
+        const openModal = (modal) => modal.style.display = 'flex';
+        const closeModal = (modal) => modal.style.display = 'none';
+        const closeAllModals = () => Object.values(modals).forEach(closeModal);
+        buttons.newGame.onclick = () => { populateSaveSlots(containers.newGame, 'new'); openModal(modals.newGame); };
+        buttons.loadGame.onclick = () => { populateSaveSlots(containers.loadGame, 'load'); openModal(modals.loadGame); };
+        buttons.trophies.onclick = () => { populateTrophySlots(); openModal(modals.trophies); };
+        buttons.options.onclick = () => { openModal(modals.options); };
+        buttons.credits.onclick = () => { openModal(modals.credits); };
+        closeButtons.forEach(button => button.onclick = closeAllModals);
+        window.onclick = (event) => { if (Object.values(modals).includes(event.target)) closeAllModals(); };
+        const applyLanguage = (lang) => { document.querySelectorAll('[data-key]').forEach(elem => { const key = elem.getAttribute('data-key'); if (translations[lang] && translations[lang][key]) { elem.textContent = translations[lang][key]; } }); buttons.langEs.classList.toggle('active', lang === 'es'); buttons.langEn.classList.toggle('active', lang === 'en'); };
+        const setLanguage = (lang) => { currentLang = lang; applyLanguage(lang); };
+        buttons.langEs.onclick = () => setLanguage('es');
+        buttons.langEn.onclick = () => setLanguage('en');
+        buttons.saveOptions.onclick = () => { const settingsToSave = { language: currentLang }; localStorage.setItem('borrowedFace_options', JSON.stringify(settingsToSave)); alert("¡Cambios guardados!"); closeAllModals(); };
+        const SAVE_SLOTS_KEY = 'borrowedFace_saveSlots';
+        const getSavedData = () => JSON.parse(localStorage.getItem(SAVE_SLOTS_KEY)) || [null, null, null];
+        const populateSaveSlots = (container, mode) => { const savedData = getSavedData(); container.innerHTML = ''; savedData.forEach((slotData, index) => { const slotElement = document.createElement('div'); slotElement.classList.add('slot'); slotElement.onclick = () => handleSlotClick(index, slotData, mode); let content; if (slotData) { content = ` <div class="slot-image"></div> <div class="slot-info"> <strong>${translations[currentLang].slot_day} ${slotData.day}</strong><br> ${slotData.survivors} ${translations[currentLang].slot_survivors}<br> ${mode === 'new' ? `<span style="color:${'var(--primary-color)'};">${translations[currentLang].slot_overwrite}</span>` : ''} </div>`; } else { content = ` <div class="slot-image">+</div> <div class="slot-info empty">${translations[currentLang].slot_empty}</div>`; } slotElement.innerHTML = content; container.appendChild(slotElement); }); };
+        const handleSlotClick = (index, slotData, mode) => { if (mode === 'new') { const isOccupied = slotData !== null; if (!isOccupied || confirm(`¿Seguro que quieres sobrescribir la partida en la ranura ${index + 1}?`)) { alert(`Iniciando nueva partida en la Ranura ${index + 1}...`); let saves = getSavedData(); saves[index] = { day: 1, survivors: 4, timestamp: new Date().toISOString() }; localStorage.setItem(SAVE_SLOTS_KEY, JSON.stringify(saves)); closeAllModals(); } } else if (mode === 'load') { if (slotData) { alert(`Cargando partida desde la Ranura ${index + 1}...`); closeAllModals(); } else { alert('Esta ranura está vacía.'); } } };
+        const populateTrophySlots = () => { const totalTrophies = 6; containers.trophies.innerHTML = ''; for(let i=0; i<totalTrophies; i++) { const slotElement = document.createElement('div'); slotElement.classList.add('slot', 'trophy-slot', 'locked'); slotElement.innerHTML = ` <div class="slot-image">?</div> <div class="slot-info">${translations[currentLang].trophy_locked}</div>`; containers.trophies.appendChild(slotElement); } };
+        const distortRandomButton = () => { const randomIndex = Math.floor(Math.random() * menuButtons.length); const randomButton = menuButtons[randomIndex]; randomButton.classList.add('distorting'); randomButton.addEventListener('animationend', () => { randomButton.classList.remove('distorting'); }, { once: true }); };
+        const startDistortionLoop = () => { const randomDelay = Math.random() * 4000 + 2000; setTimeout(() => { distortRandomButton(); startDistortionLoop(); }, randomDelay); };
+        
+        const initialize = () => {
+            const savedOptions = JSON.parse(localStorage.getItem('borrowedFace_options')) || { language: 'es' };
+            setLanguage(savedOptions.language);
+            
+            // Secuencia de la pantalla de carga
+            setTimeout(() => {
+                creepyFace.style.animation = 'flash-face 0.2s ease-in-out';
+            }, 1800); // Flash de la cara después de 1.8 segundos
+
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 3500); // Ocultar todo después de 3.5 segundos
+
+            startDistortionLoop();
+        };
+
+        initialize();
+    });
+    </script>
+</body>
+</html>
