@@ -250,6 +250,12 @@
     <audio id="background-music" src="fondo.mp3" loop></audio>
     <audio id="ui-click-sound" src="click-409642.mp3"></audio>
 
+    <!-- CAMBIO 1: AÑADIR ETIQUETAS DE AUDIO PARA LAS VOCES -->
+    <audio id="vo_lore_1" class="vo-line" src="El mundo q conocíamos.m4a"></audio>
+    <audio id="vo_lore_2" class="vo-line" src="algo cayó del suelo.m4a"></audio>
+    <audio id="vo_lore_3" class="vo-line" src="se ven como nosotros.m4a"></audio>
+    <audio id="vo_lore_4" class="vo-line" src="yo no puedo salir.m4a"></audio>
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const translations = {
@@ -264,13 +270,15 @@
                 options_difficulty_easy_desc: "Recursos más abundantes y enemigos menos agresivos. Ideal para centrarse en la historia.",
                 options_difficulty_normal_desc: "La experiencia de juego equilibrada y recomendada.",
                 options_difficulty_hard_desc: "Los recursos escasean y los enemigos son implacables. Un verdadero desafío de supervivencia.",
+                
+                // --- CAMBIO 2: ESTRUCTURA DE DIÁLOGOS MEJORADA ---
                 lore_text: [
-                    "Presentador: El mundo que conocíamos... se ha ido.",
-                    "Presentador: Algo cayó del cielo. No hicieron ruido. Simplemente... empezaron a reemplazarnos.",
-                    "Presentador: Se ven como nosotros, hablan como nosotros. Pero no lo son.",
-                    "Yo: No puedo salir. Esta casa es mi refugio y mi prisión. El miedo a que una de esas... cosas... me reemplace, me paraliza.",
-                    "Yo: Pero los recursos se agotan. El agua... la comida...",
-                    "Yo: Necesito que otros busquen recursos por mí, que corran el riesgo que yo no me atrevo a tomar."
+                    { text: "Presentador: El mundo que conocíamos... se ha ido.", audioId: "vo_lore_1" },
+                    { text: "Presentador: Algo cayó del cielo. No hicieron ruido. Simplemente... empezaron a reemplazarnos.", audioId: "vo_lore_2" },
+                    { text: "Presentador: Se ven como nosotros, hablan como nosotros. Pero no lo son.", audioId: "vo_lore_3" },
+                    { text: "Yo: No puedo salir. Esta casa es mi refugio y mi prisión. El miedo a que una de esas... cosas... me reemplace, me paraliza.", audioId: "vo_lore_4" },
+                    { text: "Yo: Pero los recursos se agotan. El agua... la comida...", audioId: null }, // Sin audio para esta línea
+                    { text: "Yo: Necesito que otros busquen recursos por mí, que corran el riesgo que yo no me atrevo a tomar.", audioId: null } // Sin audio para esta línea
                 ]
             },
             en: { 
@@ -284,13 +292,13 @@
                 options_difficulty_easy_desc: "More abundant resources and less aggressive enemies. Ideal for focusing on the story.",
                 options_difficulty_normal_desc: "The balanced and recommended gameplay experience.",
                 options_difficulty_hard_desc: "Resources are scarce and enemies are relentless. A true survival challenge.",
-                lore_text: [
-                    "Presenter: The world we knew... is gone.",
-                    "Presenter: Something fell from the sky. They made no sound. They just... started replacing us.",
-                    "Presenter: They look like us, they talk like us. But they are not.",
-                    "Me: I can't go outside. This house is my shelter and my prison. The fear of one of those... things... replacing me, it paralyzes me.",
-                    "Me: But the resources are running out. The water... the food...",
-                    "Me: I need others to search for resources for me, to take the risk I don't dare to take."
+                lore_text: [ // Versión en inglés sin audios asignados
+                    { text: "Presenter: The world we knew... is gone.", audioId: null },
+                    { text: "Presenter: Something fell from the sky. They made no sound. They just... started replacing us.", audioId: null },
+                    { text: "Presenter: They look like us, they talk like us. But they are not.", audioId: null },
+                    { text: "Me: I can't go outside. This house is my shelter and my prison. The fear of one of those... things... replacing me, it paralyzes me.", audioId: null },
+                    { text: "Me: But the resources are running out. The water... the food...", audioId: null },
+                    { text: "Me: I need others to search for resources for me, to take the risk I don't dare to take.", audioId: null }
                 ]
             }
         };
@@ -307,26 +315,35 @@
         const containers = { newGame: document.getElementById('new-game-slots-container'), loadGame: document.getElementById('load-game-slots-container'), trophies: document.getElementById('trophy-slots-container') };
         const optionsUI = { langEs: document.getElementById('lang-es'), langEn: document.getElementById('lang-en'), masterVolume: document.getElementById('master-volume'), musicVolume: document.getElementById('music-volume'), diffEasy: document.getElementById('difficulty-easy'), diffNormal: document.getElementById('difficulty-normal'), diffHard: document.getElementById('difficulty-hard'), difficultyDesc: document.getElementById('difficulty-description') };
         
-        const audio = { music: document.getElementById('background-music'), uiClick: document.getElementById('ui-click-sound') };
+        const audio = { 
+            music: document.getElementById('background-music'), 
+            uiClick: document.getElementById('ui-click-sound'),
+            // Referencias a los nuevos audios de voz
+            vo_lore_1: document.getElementById('vo_lore_1'),
+            vo_lore_2: document.getElementById('vo_lore_2'),
+            vo_lore_3: document.getElementById('vo_lore_3'),
+            vo_lore_4: document.getElementById('vo_lore_4')
+        };
         
         let isAudioUnlocked = false;
         
-        // --- CAMBIO CLAVE 1: FUNCIÓN CENTRAL PARA ACTUALIZAR VOLÚMENES ---
         const updateAudioVolumes = () => {
             const masterVol = optionsUI.masterVolume.value / 100;
             const musicMultiplier = optionsUI.musicVolume.value / 100;
             
             audio.uiClick.volume = masterVol;
             audio.music.volume = masterVol * musicMultiplier;
+            
+            // --- CAMBIO 3: LAS VOCES SE AJUSTAN CON EL VOLUMEN GENERAL ---
+            document.querySelectorAll('.vo-line').forEach(vo => {
+                vo.volume = masterVol;
+            });
         };
 
         const unlockAudio = () => {
             if (isAudioUnlocked) return;
             isAudioUnlocked = true;
             console.log("Audio context unlocked.");
-            
-            // Simplemente intenta reproducir la música del menú. El navegador lo permitirá
-            // porque esta función se llama directamente desde un evento de clic del usuario.
             audio.music.play().catch(e => console.error("La reproducción de música fue bloqueada:", e));
         };
 
@@ -366,18 +383,38 @@
             }, 3000); 
         };
         
+        // --- CAMBIO 4: LÓGICA DE REPRODUCCIÓN EN LA SECUENCIA DE HISTORIA ---
+        const stopAllVoLines = () => {
+            document.querySelectorAll('.vo-line').forEach(vo => {
+                vo.pause();
+                vo.currentTime = 0;
+            });
+        };
+
         const startLoreSequence = (slotIndex) => {
             let currentLoreIndex = 0;
             const loreTexts = translations[currentLang].lore_text;
             const subtitleElement = document.getElementById('lore-subtitle');
+            
             mainMenu.style.display = 'none';
             audio.music.pause();
+            stopAllVoLines(); // Asegurarnos de que no haya voces sonando
+
             loreScreen.style.display = 'block';
-            subtitleElement.textContent = loreTexts[currentLoreIndex];
+            
+            const playCurrentLine = () => {
+                const currentLine = loreTexts[currentLoreIndex];
+                subtitleElement.textContent = currentLine.text;
+                if (currentLine.audioId && audio[currentLine.audioId]) {
+                    audio[currentLine.audioId].play().catch(e => console.error("Error al reproducir voz:", e));
+                }
+            };
+
             const advanceLore = () => {
+                stopAllVoLines(); // Detener la voz actual al hacer clic
                 currentLoreIndex++;
                 if (currentLoreIndex < loreTexts.length) {
-                    subtitleElement.textContent = loreTexts[currentLoreIndex];
+                    playCurrentLine(); // Reproducir la siguiente línea
                 } else {
                     loreScreen.removeEventListener('click', advanceLore);
                     loreScreen.style.display = 'none';
@@ -387,7 +424,9 @@
                     beginGameFlow(saves[slotIndex]);
                 }
             };
+
             loreScreen.addEventListener('click', advanceLore);
+            playCurrentLine(); // Reproducir la primera línea al empezar
         };
 
         const updateDifficultyDescription = (difficulty) => { const key = `options_difficulty_${difficulty}_desc`; if (translations[currentLang] && translations[currentLang][key]) { optionsUI.difficultyDesc.textContent = translations[currentLang][key]; } };
@@ -462,10 +501,7 @@
             applyLanguage(options.language);
             optionsUI.masterVolume.value = options.masterVolume; 
             optionsUI.musicVolume.value = options.musicVolume;
-            
-            // --- CAMBIO CLAVE 2: APLICAR VOLUMEN AL CARGAR OPCIONES ---
             updateAudioVolumes();
-            
             document.querySelectorAll('#options-modal .control button[id^="difficulty-"]').forEach(b => b.classList.remove('active'));
             const difficultyButton = document.getElementById(`difficulty-${options.difficulty}`);
             if(difficultyButton) { difficultyButton.classList.add('active'); }
@@ -485,7 +521,6 @@
         });
 
         const playUiSound = () => {
-            // No es necesario verificar isAudioUnlocked aquí, porque si se puede hacer clic, ya está desbloqueado.
             audio.uiClick.currentTime = 0;
             audio.uiClick.play().catch(()=>{});
         };
@@ -494,7 +529,6 @@
             elem.addEventListener('click', playUiSound);
         });
 
-        // --- CAMBIO CLAVE 3: CONECTAR LAS BARRAS A LA FUNCIÓN DE VOLUMEN ---
         optionsUI.masterVolume.addEventListener('input', updateAudioVolumes);
         optionsUI.musicVolume.addEventListener('input', updateAudioVolumes);
 
@@ -509,7 +543,6 @@
             const startDistortionLoop = () => { const randomDelay = Math.random() * 4000 + 2000; setTimeout(() => { distortRandomButton(); startDistortionLoop(); }, randomDelay); };
             startDistortionLoop();
             
-            // Este evento solo se ejecutará una vez en toda la sesión.
             document.addEventListener('click', unlockAudio, { once: true });
             document.addEventListener('keydown', unlockAudio, { once: true });
         };
