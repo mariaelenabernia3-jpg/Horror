@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Borrowed Face - Habitación</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,7 +24,6 @@
             position: relative;
             width: 100vw;
             height: 100vh;
-            /* Asegúrate de que el nombre del archivo de imagen sea el correcto */
             background: url('casa.webp') no-repeat center center;
             background-size: cover; 
         }
@@ -35,6 +34,7 @@
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             border-radius: 5px;
+            /* Se añade para depuración visual si es necesario: border: 1px solid red; */
         }
 
         .interactive-zone:hover {
@@ -43,24 +43,23 @@
             box-shadow: 0 0 15px var(--secondary-color);
         }
 
-        /* --- COORDENADAS AJUSTADAS NUEVAMENTE --- */
-
+        /* --- COORDENADAS --- */
         #tv-zone {
             top: 24%;
-            left: 22%; /* Más a la derecha */
+            left: 22%;
             width: 15%;
             height: 30%;
         }
 
         #radio-zone {
             top: 58%;
-            left: 50%; /* Más para la derecha */
+            left: 50%;
             width: 10%;
             height: 10%;
         }
 
         #cabinet-zone {
-            top: 10%;   /* Más para arriba */
+            top: 10%;
             right: 1%;
             width: 15%;
             height: 48%;
@@ -90,14 +89,12 @@
             text-shadow: 0 0 10px var(--primary-color);
         }
         
-        /* Flecha apuntando a la puerta */
         #door-arrow {
-            top: 40%;   /* Más para arriba */
+            top: 40%;
             left: 52%;
             transform: translateY(-50%); 
         }
 
-        /* Flecha inferior añadida de nuevo */
         #hallway-arrow {
             bottom: 2%;
             left: 50%;
@@ -106,7 +103,7 @@
 
         /* --- Caja de Texto para descripciones --- */
         #description-box {
-            display: none; /* Oculto por defecto */
+            display: none;
             position: absolute;
             bottom: 5%;
             left: 50%;
@@ -126,6 +123,32 @@
          #description-box.visible {
             display: block;
         }
+
+        /* --- INICIO: ADAPTACIÓN PARA MÓVILES --- */
+        @media (max-width: 768px) {
+            #game-container {
+                /*
+                Cambiamos 'cover' a 'contain' en móviles.
+                Esto asegura que toda la imagen sea visible sin ser cortada,
+                manteniendo las proporciones y la posición de las zonas interactivas.
+                Puede que aparezcan barras negras arriba/abajo, pero el juego será 100% funcional.
+                */
+                background-size: contain;
+            }
+
+            .nav-arrow {
+                /* Hacemos las flechas más grandes para que sean fáciles de tocar */
+                font-size: 10vw;
+            }
+
+            #description-box {
+                /* Ajustamos el texto y el ancho para mejor legibilidad en pantallas pequeñas */
+                font-size: 1.3rem;
+                width: 90%;
+            }
+        }
+        /* --- FIN: ADAPTACIÓN PARA MÓVILES --- */
+
     </style>
 </head>
 <body>
@@ -166,7 +189,9 @@
             };
 
             document.querySelectorAll('.interactive-zone').forEach(zone => {
-                zone.addEventListener('click', () => {
+                zone.addEventListener('click', (event) => {
+                    // Detenemos la propagación para que el clic no llegue al contenedor del juego
+                    event.stopPropagation(); 
                     const description = objectDescriptions[zone.id];
                     if (description) {
                         showDescription(description);
@@ -174,11 +199,9 @@
                 });
             });
 
-            // Oculta la descripción si se hace clic fuera de una zona interactiva
-            document.getElementById('game-container').addEventListener('click', (event) => {
-                if (!event.target.classList.contains('interactive-zone')) {
-                    hideDescription();
-                }
+            // Oculta la descripción si se hace clic en el contenedor principal
+            document.getElementById('game-container').addEventListener('click', () => {
+                hideDescription();
             });
         });
     </script>
