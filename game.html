@@ -26,55 +26,52 @@
             height: 100vh;
             background: url('casa.webp') no-repeat center center;
             background-size: cover; 
+            animation: flicker-effect 15s infinite linear; /* Efecto de parpadeo sutil */
         }
 
-        /* --- INICIO: FILTRO RETRO --- */
+        /* --- FILTRO RETRO --- */
         .retro-filter {
-            /* 1. Ajustes de color para un look "gastado" */
             filter: sepia(0.3) contrast(1.1) brightness(0.9) saturate(0.9);
         }
 
         .retro-filter::before {
-            /* 2. Capa de viñeta (bordes oscuros) y ruido/estática */
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 2;
-            pointer-events: none; /* Importante para poder hacer clic a través de la capa */
-            
-            /* Viñeta con gradiente radial */
+            pointer-events: none;
             background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 110%);
-            
-            /* Ruido/estática con una pequeña imagen base64 y animación de parpadeo */
             background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAACnRSTlMAAAAAAJu0g8YrOImKbgAAAStJREFUeNrtlcsOwzAMA0s0i795t7//vVwmcur4o7l6mn5X8wBaTo2uR3s8wquv2/s48_4vXq_s/_i8jgpLTjpzRJGwJ8XClV050I0PT4lkxrr0ifYAnqUeSgQ10tMplE94h3CK1P8ES2YqjAFxLcpkL3yJc1q9+nQV8bCeG8ztCAzDODnL2wQu8mI0BNbBE5CEKBy/gI1yXgGfA7gT/yYD/ATyAOQj+mQro3n58W2XvQvjN4/gX0EDAz1HwAVxI4Ea+MvSC8E+e/uQp57wGvA150QeA2wR/yM+QCf4D/gL+AMX/T0Afgv8wIRfAdgWXOh3wFWsXvA+zWwVfiEdCL8BuxXmBfQSEEfgwM4j+A/wA+gBn4A/Atk/zv4A/An8AfwC/AVi78+wD8c/wB+/vwB/Av4DfgF+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A34BfgN+A3eIAAAAAElFTSuQmCC);
             animation: static-flicker 0.15s infinite;
         }
 
         .retro-filter::after {
-            /* 3. Capa de líneas de escaneo (scanlines) */
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 3;
             pointer-events: none;
-            
-            /* Líneas horizontales con gradiente lineal y animación de movimiento */
             background: linear-gradient(0deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%);
-            background-size: 100% 4px; /* Grosor de las líneas */
+            background-size: 100% 4px;
             animation: scanlines 10s linear infinite;
         }
 
-        /* Animaciones para el filtro */
         @keyframes static-flicker {
-            0%, 100% { opacity: 0.08; }
-            50% { opacity: 0.12; }
+            0%, 100% { opacity: 0.08; } 50% { opacity: 0.12; }
         }
         @keyframes scanlines {
-            from { background-position: 0 0; }
-            to { background-position: 0 -100vh; }
+            from { background-position: 0 0; } to { background-position: 0 -100vh; }
         }
-        /* --- FIN: FILTRO RETRO --- */
-
+        @keyframes flicker-effect {
+            0% { filter: brightness(0.95); }
+            5% { filter: brightness(1.0); }
+            10% { filter: brightness(0.95); }
+            25% { filter: brightness(1.0); }
+            40% { filter: brightness(0.9); }
+            50% { filter: brightness(1.0); }
+            70% { filter: brightness(0.98); }
+            100% { filter: brightness(0.95); }
+        }
 
         /* --- Zonas Interactivas --- */
         .interactive-zone {
@@ -82,7 +79,7 @@
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             border-radius: 5px;
-            z-index: 5; /* Aseguramos que estén sobre el fondo pero debajo de los filtros */
+            z-index: 5;
         }
 
         .interactive-zone:hover {
@@ -92,21 +89,12 @@
         }
 
         /* --- COORDENADAS --- */
-        #tv-zone {
-            top: 24%; left: 22%; width: 15%; height: 30%;
-        }
-
-        #radio-zone {
-            top: 58%; left: 50%; width: 10%; height: 10%;
-        }
-
-        #cabinet-zone {
-            top: 10%; right: 1%; width: 15%; height: 48%;
-        }
-        
-        #picture-zone {
-             top: 7%; left: 8%; width: 13%; height: 12%;
-        }
+        #tv-zone { top: 24%; left: 22%; width: 15%; height: 30%; }
+        #radio-zone { top: 58%; left: 50%; width: 10%; height: 10%; }
+        #cabinet-zone { top: 10%; right: 1%; width: 15%; height: 48%; }
+        #picture-zone { top: 7%; left: 8%; width: 13%; height: 12%; }
+        #clock-zone { top: 10%; left: 1%; width: 7%; height: 50%; }
+        #window-zone { top: 18%; left: 38%; width: 20%; height: 20%; }
 
         /* --- Flechas de Navegación --- */
         .nav-arrow {
@@ -125,15 +113,10 @@
             text-shadow: 0 0 10px var(--primary-color);
         }
         
-        #door-arrow {
-            top: 30%; left: 52%; transform: translateY(-50%); 
-        }
+        #door-arrow { top: 25%; left: 52%; transform: translateY(-50%); }
+        #hallway-arrow { bottom: 2%; left: 50%; transform: translateX(-50%) rotate(90deg); }
 
-        #hallway-arrow {
-            bottom: 2%; left: 50%; transform: translateX(-50%) rotate(90deg);
-        }
-
-        /* --- Caja de Texto para descripciones --- */
+        /* --- Caja de Texto --- */
         #description-box {
             display: none;
             position: absolute;
@@ -152,23 +135,23 @@
             z-index: 20;
             user-select: none;
         }
-         #description-box.visible {
-            display: block;
-        }
+         #description-box.visible { display: block; }
 
-        /* --- ADAPTACIÓN PARA MÓVILES --- */
-        @media (max-width: 768px) {
+        /* --- ADAPTACIÓN PARA MÓVILES (INCLUYENDO REDMI) --- */
+        @media (max-width: 768px) and (orientation: portrait) {
             #game-container {
                 background-size: contain;
             }
 
             .nav-arrow {
-                font-size: 10vw;
+                font-size: 12vw;
+                padding: 10px; /* Aumenta el área táctil */
             }
 
             #description-box {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
                 width: 90%;
+                bottom: 12%; /* Sube la caja para no estar tan cerca del borde inferior */
             }
         }
     </style>
@@ -181,6 +164,8 @@
         <div id="radio-zone" class="interactive-zone"></div>
         <div id="cabinet-zone" class="interactive-zone"></div>
         <div id="picture-zone" class="interactive-zone"></div>
+        <div id="clock-zone" class="interactive-zone"></div>
+        <div id="window-zone" class="interactive-zone"></div>
 
         <!-- Flechas de Navegación -->
         <a href="door.html" id="door-arrow" class="nav-arrow">➔</a>
@@ -190,15 +175,22 @@
     <!-- Caja de texto para mostrar mensajes -->
     <div id="description-box"></div>
 
+    <!-- Audio de ambiente -->
+    <audio id="ambient-sound" src="audio/ambiente_tenso.mp3" loop></audio>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const descriptionBox = document.getElementById('description-box');
+            const ambientSound = document.getElementById('ambient-sound');
+            let isAudioPlaying = false;
             
             const objectDescriptions = {
                 'tv-zone': "Solo hay estática. Un zumbido incesante que llena el silencio.",
                 'radio-zone': "La perilla gira, pero solo se escuchan fragmentos de voces lejanas y música rota. Nada claro.",
                 'cabinet-zone': "Cerrado con llave. Parece que alguien no quería que se abriera fácilmente.",
-                'picture-zone': "Un paisaje de un tiempo más simple. Un lugar al que ya no se puede volver."
+                'picture-zone': "Un paisaje de un tiempo más simple. Un lugar al que ya no se puede volver.",
+                'clock-zone': "Las manecillas no se mueven. El tiempo se detuvo aquí hace mucho.",
+                'window-zone': "Las ventanas están cubiertas de suciedad y mugre. Imposible ver el exterior."
             };
 
             const showDescription = (text) => {
@@ -208,6 +200,16 @@
             
             const hideDescription = () => {
                 descriptionBox.classList.remove('visible');
+            };
+
+            const unlockAudio = () => {
+                if (isAudioPlaying) return;
+                ambientSound.volume = 0.3; // Volumen bajo para que sea sutil
+                ambientSound.play().then(() => {
+                    isAudioPlaying = true;
+                }).catch(error => {
+                    console.log("El navegador bloqueó la reproducción automática. El audio comenzará con la siguiente interacción.");
+                });
             };
 
             document.querySelectorAll('.interactive-zone').forEach(zone => {
@@ -220,12 +222,16 @@
                 });
             });
 
-            document.getElementById('game-container').addEventListener('click', () => {
-                hideDescription();
-            });
+            // Oculta la descripción y activa el audio en el primer clic
+            document.body.addEventListener('click', () => {
+                unlockAudio(); // Intenta reproducir el audio en cualquier clic
+                if (!event.target.classList.contains('interactive-zone')) {
+                    hideDescription();
+                }
+            }, true); // Usamos 'capturing' para asegurar que este evento se dispare primero
+
         });
     </script>
 
 </body>
 </html>
-
